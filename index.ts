@@ -1,3 +1,5 @@
+import Generator from "./Generator";
+
 function createScript() {
     const language = process.argv[2];
     const versioning = process.argv[3];
@@ -9,14 +11,7 @@ function createScript() {
       console.log(`Versioning selected: ${versioning}`);
     }
   
-    let script = createAptScript() + createPipScript();
-    console.log(script);
-    const fs = require("fs");
-    fs.writeFile("install-depedencies.sh", script, (err) => {
-      if (err) throw err;
-      console.log("Script Generated");
-      console.log(
-        "Find your script in the generated file install-depedencies.sh"
-      );
-    });
-  }
+    let generator = new Generator(language, versioning === 'true');
+    generator.createScript();
+}
+createScript();

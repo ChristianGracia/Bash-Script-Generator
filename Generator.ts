@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 // This is for arrays of package names when version isn't important
 // Leave this as empty array unless you want to hardcode each package
 const nonVersionedDependencies = [];
@@ -10,7 +12,7 @@ const nonVersionedDependencies = [];
 
 // This is for an object with keys equal to package names and values of the package version for when specific version is important
 // Leave this as empty object unless you want to hardcode in the package + version
-const versionedDependencies = {};
+const versionedDependencies = [{}];
 
 // ex. install pip at 20.3.4 and requests as 2.25.1
 // const versionedDependencies = {
@@ -24,8 +26,15 @@ const scriptLanguage = {
   PYTHON: "pip install",
 };
 
-export class Generator {
-  createVersionedScript = () => {
+export default class Generator {
+  public language: string = '';
+  public versioning: boolean = false;
+
+  constructor(language: string, versioning: boolean) {
+    this.language = language;
+    this.versioning = versioning;
+}
+  private createVersionedScript = () => {
     const keys = Object.keys(versionedDependencies);
     return keys.reduce(
       (scriptString, dependency, currentIndex) =>
@@ -35,7 +44,7 @@ export class Generator {
       ""
     )
   }
-  createNonVersionedScript = () => {
+  private createNonVersionedScript = () : string => {
     return nonVersionedDependencies.reduce(
       (scriptString, dependency, currentIndex) =>
         (scriptString += `${scriptLanguage} ${dependency}${
@@ -43,5 +52,23 @@ export class Generator {
         } `),
       ""
     );
+  }
+  public createScript = () => {
+    if (this.versioning) {
+      this.createVersionedScript();
+    } else {
+      this.createNonVersionedScript();
+    }
+    this.writeScriptToFile();
+  }
+
+  private writeScriptToFile = () => {
+    fs.writeFile("install-depedencies.sh", '', (err: any) => {
+      if (err) throw err;
+      console.log(`${this.versioning ? 'Versioned' : 'Non Versioned'} Script Generated`);
+      console.log(
+        "Find your script in the generated file install-depedencies.sh"
+      );
+    });
   }
 }
