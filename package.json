@@ -15,7 +15,8 @@
     "version": "npm run format && git add .",
     "postversion": "git push && git push --tags",
     "patch": "npm version patch",
-    "release": "npm publish"
+    "release": "npm publish",
+    "clean": "rm *.test.js *.js */*.js"
   },
   "keywords": [
     "javascript",
