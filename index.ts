@@ -2,7 +2,7 @@ const fs = require("fs");
 
 // This is for arrays of package names when version isn't important
 // Leave this as empty array unless you want to hardcode each package
-const nonVersionedDependencies = [];
+const nonVersionedDependencies = ['lol', 'hi'];
 
 // ex. install python3-dev and python3-pip without specific version
 // const nonVersionedDependencies = [
@@ -14,7 +14,7 @@ const nonVersionedDependencies = [];
 
 // This is for an object with keys equal to package names and values of the package version for when specific version is important
 // Leave this as empty object unless you want to hardcode in the package + version
-const versionedDependencies = { pip: "1.1.0" };
+const versionedDependencies = {};
 
 // ex. install pip at 20.3.4 and requests as 2.25.1
 // const versionedDependencies = {
@@ -25,16 +25,18 @@ const versionedDependencies = { pip: "1.1.0" };
 // -----------------------------------------------------------------------------------------------------------------------------------------------
 
 // Edit script installation text here
-const fileLanguage = {
-  APT: "sudo apt-get install",
-  'requirements.txt': "pip install",
+const fileLanguages = {
+  apt: "sudo apt-get install",
+  python: "pip install",
 };
 
 class Generator {
   private file: string = "";
   private script: string = "";
+  private language: string = "";
 
-  constructor(file: string) {
+  constructor(language: string, file: string) {
+    this.language = language,
     this.file = file;
   }
 
@@ -42,7 +44,7 @@ class Generator {
     const keys = Object.keys(versionedDependencies);
     return keys.reduce(
       (scriptString, dependency, currentIndex) =>
-        (scriptString += `${fileLanguage[this.file]} ${dependency}==${
+        (scriptString += `${fileLanguages[this.language]} ${dependency}==${
           versionedDependencies[dependency]
         }${currentIndex < keys.length - 1 ? " && " : ""}`),
       ""
@@ -51,41 +53,52 @@ class Generator {
   private createNonVersionedScript = () : string => {
     return nonVersionedDependencies.reduce(
       (scriptString, dependency, currentIndex) =>
-        (scriptString += `${fileLanguage[this.file]} ${dependency}${
+        (scriptString += `${fileLanguages[this.language]} ${dependency}${
           currentIndex < nonVersionedDependencies.length - 1 ? " && " : ""
         } `),
       ""
     );
   }
+  private createScriptFromFile = () => {
+    console.log('File found');
+    // this.writeScriptToFile(this.script);
+  }
+
   public createScript = () => {
-
+    if (!Object.keys(fileLanguages).includes(this.language)) {
+      console.log('Incorrect or unsupported installation language set')
+      return;
+    }
     if (this.file) {
-      console.log('File found');
-
+      this.createScriptFromFile();
     } else {
-      console.log('No File given as argument, checking hardcoded values');
-      const hardCodedVersionedDependencies = Object.keys(versionedDependencies).length;
-      const hardCodedNonVersionedDependencies = nonVersionedDependencies.length;
-  
-      // Cannot currently process both at once
-      if (hardCodedVersionedDependencies && hardCodedNonVersionedDependencies) {
-        console.log('Cannot parse both versioned object and non versioned dependencies at the same time currently, this will be implemented later');
-        return;
-      }
+      this.attemptScriptFromHardcodedValues();
+    }
+  }
+  private attemptScriptFromHardcodedValues = () => {
+    console.log('No File given as argument, checking hardcoded values');
 
-      if (!hardCodedVersionedDependencies && !hardCodedNonVersionedDependencies) {
-        console.log('No hardcoded dependencies or file given as an argument to create script');
-        return;
-      }
+    const hardCodedVersionedDependencies = Object.keys(versionedDependencies).length;
+    const hardCodedNonVersionedDependencies = nonVersionedDependencies.length;
 
-      if (hardCodedVersionedDependencies) {
-        console.log('creating versioned dependencies script')
-        this.script = this.createVersionedScript();
-      }
-      else if (hardCodedNonVersionedDependencies) {
-        console.log('creating non versioned dependencies script')
-        this.script = this.createNonVersionedScript();
-      }
+    // Cannot currently process both at once
+    if (hardCodedVersionedDependencies && hardCodedNonVersionedDependencies) {
+      console.log('Cannot parse both versioned object and non versioned dependencies at the same time currently, this will be implemented later');
+      return;
+    }
+
+    if (!hardCodedVersionedDependencies && !hardCodedNonVersionedDependencies) {
+      console.log('No hardcoded dependencies or file given as an argument to create script');
+      return;
+    }
+
+    if (hardCodedVersionedDependencies) {
+      console.log('creating versioned dependencies script')
+      this.script = this.createVersionedScript();
+    }
+    else if (hardCodedNonVersionedDependencies) {
+      console.log('creating non versioned dependencies script')
+      this.script = this.createNonVersionedScript();
     }
     this.writeScriptToFile(this.script);
   }
@@ -93,6 +106,8 @@ class Generator {
   private writeScriptToFile = (script: string) => {
     fs.writeFile("install-depedencies.sh", script, (err: any) => {
       if (err) throw err;
+      console.log('Script Created');
+      console.log(this.script);
       console.log(
         "Find your script in the generated file install-depedencies.sh"
       );
@@ -101,17 +116,31 @@ class Generator {
 }
 
 function createScript() {
-  console.log(process.argv)
+  if (process.argv.length < 3) {
+    console.log('Arguments required to create script')
+
+    console.log('npm run start -- LANGUAGE FILE')
+    console.log('If you have a file to be read ex. npm run start -- pip requirements.txt')
+
+    console.log('npm run start -- LANGUAGE')
+    console.log('If you have a hardcoded values to be used ex. npm run start -- pip')
+    return;
+  }
 
   // First CLI argument 
-  // If file is given, use filename if not empty string
-  const file = process.argv.length > 2 ? process.argv[2] : ""
+  // language of install to be used
+  const language = process.argv[2];
 
+  // Second Optional CLI argument 
+  // If file is given, use filename if not empty string
+  const file = process.argv.length > 3 ? process.argv[3] : "";
   try {
-    let generator = new Generator(file);
+    let generator = new Generator(language, file);
     generator.createScript();
   } catch { console.log('error creating script')}
 
-  fs.unlinkSync('index.js');
+  
 }
+
 createScript();
+fs.unlinkSync('index.js');
