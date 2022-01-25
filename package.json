@@ -1,13 +1,22 @@
 {
   "name": "bash-script-dependency-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This package creates bash installation scripts by reading dependency files such as package.json or requirements.txt",
   "main": "index.ts",
   "scripts": {
     "start": "tsc index.ts && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["typescript", "script", "generator", "installation", "dependency", "bash", "pip", "apt"],
+  "keywords": [
+    "typescript",
+    "script",
+    "generator",
+    "installation",
+    "dependency",
+    "bash",
+    "pip",
+    "apt"
+  ],
   "author": "Christian Gracia",
   "repository": {
     "type": "git",
