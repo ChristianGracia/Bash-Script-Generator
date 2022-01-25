@@ -8,7 +8,7 @@ This is still in development so this package's main use is to generate long scri
 
 **Other dependency files like package.json will get added in the future**
 
-If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below
+If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below inside 'node_modules/bash-script-dependency-generator'
 
 ---
 
@@ -53,7 +53,7 @@ const versionedDependencies = {
 
 Run the following command where language is the installation language (Ex. Python would be `pip install`, Linux would use `sudo apt-get install`)
 
-`npm run start INSTALLATION_LANGUAGE FILE`
+`node node_modules/bash-script-dependency-generator/ INSTALLATION_LANGUAGE FILE`
 
 File argument is optional, if omitted, a script will be attemped to be built from whatever is in the versionedDependencies object or nonVersionedDependencies array
 
@@ -61,17 +61,17 @@ Python dependencies - Pip
 
 Run in terminal if hardcoded versionedDependencyObject
 
-`npm run start pip`
+`node node_modules/bash-script-dependency-generator/ pip`
 
 Run in terminal if you have the dependency file
 
-`npm run start pip PATH/TO/requirements.txt`
+`node node_modules/bash-script-dependency-generator/ pip PATH/TO/requirements.txt`
 
 Debian Linux - APT
 
 Run in terminal if hardcoded nonVersionedDependency array
 
-`npm run start apt`
+`node node_modules/bash-script-dependency-generator/ apt`
 
 ---
 
@@ -80,4 +80,4 @@ Run in terminal if hardcoded nonVersionedDependency array
 JavaScript/TypeScript - NPM
 
 Run in terminal
-`npm run start -- package.json`
+`node node_modules/bash-script-dependency-generator/ -- package.json`
