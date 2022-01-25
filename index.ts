@@ -144,9 +144,6 @@ function createScript() {
     let generator = new Generator(language, file);
     generator.createScript();
   } catch { console.log('error creating script')}
-
-  
 }
 
 createScript();
-fs.unlinkSync('index.js');
