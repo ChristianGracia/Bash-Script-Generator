@@ -45,14 +45,27 @@ const versionedDependencies = {
 
 ## Use
 
-run the following command where language is the installation language (Ex. Python would be `pip install`, Linux would use sudo `apt-get install`) and VERSIONING_REQUIRED is a Boolean value equal to whether or not these packages need specific versions installed
+Run the following command where language is the installation language (Ex. Python would be `pip install`, Linux would use sudo `apt-get install`)
 
-`npm run start -- LANGUAGE VERSIONING_REQUIRED`
+`npm run start INSTALLATION_LANGUAGE FILE`
+
+File argument is optional, if omitted, a script will be attemped to be built from whatever is in the versionedDependencies object or nonVersionedDependencies array
 
 Python dependencies - Pip
 
-Run in terminal
-`npm run start -- python true`
+Run in terminal if hardcoded versionedDependencyObject
+
+`npm run start pip`
+
+Run in terminal if you have the dependency file
+
+`npm run start pip PATH/TO/requirements.txt`
+
+Debian Linux - APT
+
+Run in terminal if hardcoded nonVersionedDependency array
+
+`npm run start apt`
 
 ---
 
@@ -61,8 +74,4 @@ Run in terminal
 JavaScript/TypeScript - NPM
 
 Run in terminal
-`npm run start -- javascript true`
-
-Debian Linux - APT
-
-`npm run start -- linux true`
+`npm run start -- package.json`

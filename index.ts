@@ -2,7 +2,7 @@ const fs = require("fs");
 
 // This is for arrays of package names when version isn't important
 // Leave this as empty array unless you want to hardcode each package
-const nonVersionedDependencies = ['lol', 'hi'];
+const nonVersionedDependencies = [];
 
 // ex. install python3-dev and python3-pip without specific version
 // const nonVersionedDependencies = [
@@ -27,7 +27,7 @@ const versionedDependencies = {};
 // Edit script installation text here
 const fileLanguages = {
   apt: "sudo apt-get install",
-  python: "pip install",
+  pip: "pip install",
 };
 
 class Generator {
@@ -44,9 +44,7 @@ class Generator {
     const keys = Object.keys(versionedDependencies);
     return keys.reduce(
       (scriptString, dependency, currentIndex) =>
-        (scriptString += `${fileLanguages[this.language]} ${dependency}==${
-          versionedDependencies[dependency]
-        }${currentIndex < keys.length - 1 ? " && " : ""}`),
+        (scriptString += `${fileLanguages[this.language]} ${dependency}==${versionedDependencies[dependency]}${currentIndex < keys.length - 1 ? " && " : ""}`),
       ""
     )
   }
@@ -55,13 +53,21 @@ class Generator {
       (scriptString, dependency, currentIndex) =>
         (scriptString += `${fileLanguages[this.language]} ${dependency}${
           currentIndex < nonVersionedDependencies.length - 1 ? " && " : ""
-        } `),
+        }`),
       ""
     );
   }
   private createScriptFromFile = () => {
-    console.log('File found');
-    // this.writeScriptToFile(this.script);
+    console.log(`-------------------------------------------------- Reading File - ${this.file} ------------------------------------------------------`);
+    fs.readFile(this.file, 'utf8', (err, data) => {
+      const parsedData = data.split("\n").map((item) => item.replace(/[\r]/g, ""));
+      parsedData.forEach((item) => {
+        const splitItem = item.split("==");
+        versionedDependencies[splitItem[0]] = splitItem[1];
+      });
+      this.script = this.createVersionedScript();
+      this.writeScriptToFile(this.script);
+    });
   }
 
   public createScript = () => {
@@ -106,7 +112,7 @@ class Generator {
   private writeScriptToFile = (script: string) => {
     fs.writeFile("install-depedencies.sh", script, (err: any) => {
       if (err) throw err;
-      console.log('Script Created');
+      console.log('-------------------------------------------------- Script Created -----------------------------------------------------------------');
       console.log(this.script);
       console.log(
         "Find your script in the generated file install-depedencies.sh"
