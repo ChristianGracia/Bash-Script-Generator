@@ -110,7 +110,7 @@ class Generator {
   }
 
   private writeScriptToFile = (script: string) => {
-    fs.writeFile("install-depedencies.sh", script, (err: any) => {
+    fs.writeFile("../../install-depedencies.sh", script, (err: any) => {
       if (err) throw err;
       console.log('-------------------------------------------------- Script Created -----------------------------------------------------------------');
       console.log(this.script);
