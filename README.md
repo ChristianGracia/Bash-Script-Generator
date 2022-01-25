@@ -4,6 +4,10 @@ This repository is for an NPM package I made that creates a script of chained in
 
 You can read dependencies from a file like requirements.txt for Python or package.json for JavaScript/TypeScript.
 
+This is still in development so this package's main use is to generate long scripts using hardcoded objects or arrays in index.ts or using a file like requirements.txt to generate a long chain of pip installs.
+
+**Other dependency files like package.json will get added in the future**
+
 If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below
 
 ---
@@ -15,6 +19,7 @@ Ex. install python3-dev and python3-pip without specific version
 ```
 // This is for arrays of package names when version isn't important
 // Leave this as empty array unless you want to hardcode each package
+
 const nonVersionedDependencies = [
 	"python3-dev",
 	"python3-pip"
@@ -30,6 +35,7 @@ Ex. install pip at 20.3.4 and requests as 2.25.1
 ```
 // This is for an object with keys equal to package names and values of the package version for when specific version is important
 // Leave this as empty object unless you want to hardcode in the package + version
+
 const versionedDependencies = {
 	pip: "20.3.4",
 	requests: "2.25.1",
@@ -45,7 +51,7 @@ const versionedDependencies = {
 
 ## Use
 
-Run the following command where language is the installation language (Ex. Python would be `pip install`, Linux would use sudo `apt-get install`)
+Run the following command where language is the installation language (Ex. Python would be `pip install`, Linux would use `sudo apt-get install`)
 
 `npm run start INSTALLATION_LANGUAGE FILE`
 
