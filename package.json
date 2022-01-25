@@ -1,6 +1,6 @@
 {
   "name": "bash-script-dependency-generator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This package creates bash installation scripts by reading dependency files such as package.json or requirements.txt",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,9 @@
     "pip",
     "apt"
   ],
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "author": "Christian Gracia",
   "repository": {
     "type": "git",
