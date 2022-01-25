@@ -6,6 +6,8 @@ You can read dependencies from a file like requirements.txt for Python or packag
 
 This is still in development so this package's main use is to generate long scripts using hardcoded objects or arrays in index.ts or using a file like requirements.txt to generate a long chain of pip installs.
 
+**I made this from scratch in a couple hours so this is very Work in Progress and a lot of features to be implemented**
+
 **Other dependency files like package.json will get added in the future**
 
 If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below inside 'node_modules/bash-script-dependency-generator'
@@ -47,7 +49,7 @@ const versionedDependencies = {
 
 ## Installation
 
-`npm i --dev`
+`npm i --dev bash-script-dependency-generator@latest`
 
 ## Use
 
