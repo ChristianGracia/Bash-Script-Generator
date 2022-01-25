@@ -8,6 +8,8 @@ This is still in development so this package's main use is to generate long scri
 
 **I made this from scratch in a couple hours so this is very Work in Progress and a lot of features to be implemented**
 
+[![Video](https://i.imgur.com/v3XHNKT.png)](https://i.imgur.com/fIsW1WI.mp4)
+
 **Other dependency files like package.json will get added in the future**
 
 If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below inside 'node_modules/bash-script-dependency-generator'
