@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare" : "npm run build"
   },
   "keywords": [
     "javascript",
@@ -19,7 +20,7 @@
     "apt"
   ],
   "files": [
-    "lib/**/*"
+    "index.js"
   ],
   "author": "Christian Gracia",
   "repository": {
