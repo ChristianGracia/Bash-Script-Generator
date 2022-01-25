@@ -87,7 +87,7 @@ var Generator = /** @class */ (function () {
             _this.writeScriptToFile(_this.script);
         };
         this.writeScriptToFile = function (script) {
-            fs.writeFile("install-depedencies.sh", script, function (err) {
+            fs.writeFile("../../install-depedencies.sh", script, function (err) {
                 if (err)
                     throw err;
                 console.log('-------------------------------------------------- Script Created -----------------------------------------------------------------');
