@@ -59,7 +59,7 @@ Run the following command where language is the installation language (Ex. Pytho
 
 File argument is optional, if omitted, a script will be attemped to be built from whatever is in the versionedDependencies object or nonVersionedDependencies array
 
-Python dependencies - Pip
+**Python dependencies - Pip**
 
 Run in terminal if hardcoded versionedDependencyObject
 
@@ -69,7 +69,7 @@ Run in terminal if you have the dependency file
 
 `node node_modules/bash-script-dependency-generator/ pip PATH/TO/requirements.txt`
 
-Debian Linux - APT
+**Debian Linux - APT**
 
 Run in terminal if hardcoded nonVersionedDependency array
 
@@ -79,7 +79,7 @@ Run in terminal if hardcoded nonVersionedDependency array
 
 **IN PROGRESS**
 
-JavaScript/TypeScript - NPM
+**JavaScript/TypeScript - NPM**
 
 Run in terminal
 `node node_modules/bash-script-dependency-generator/ -- package.json`
