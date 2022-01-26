@@ -31,7 +31,8 @@
     "apt"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "classes/*"
   ],
   "author": "Christian Gracia",
   "repository": {
