@@ -6,7 +6,7 @@ This tool allows you to rebuild your bash installation scripts very fast and mak
 
 You can read dependencies from a file like requirements.txt for Python or package.json for JavaScript/TypeScript.
 
-This is still in development so this package's main use is to generate very long scripts using hardcoded objects or arrays in index.js, using a file like requirements.txt to generate a long chain of pip installs or package.json for npm installs (regular dependencies and dev)
+This is still in development so this package's main use is to generate very long scripts using hardcoded objects/arrays in the Generator class or using a file like requirements.txt to generate a long chain of pip installs or package.json for npm installs (regular dependencies and dev)
 
 ![pic](https://i.imgur.com/cKVykHp.png)
 
@@ -18,7 +18,7 @@ Click the image below to watch demo
 
 **Other dependency installation file types will get added in the future**
 
-If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below in **'node_modules/bash-script-dependency-generator/index.js'**. Here you can update one large array of strings called nonVersionedDependencies **if package version does not matter** or one large object called versionedDependencies **if you want to keep track of versions**. This allows you to be able to update your dependencies and change the wording of the installation quick and easy.
+If you do not have dependency files or want to use an unsupported language you can hardcode in your dependencies as seen below in **'node_modules/bash-script-dependency-generator/class/Generator.js'**. Here you can update one large array of strings called nonVersionedDependencies **if package version does not matter** or one large object called versionedDependencies **if you want to keep track of versions**. This allows you to be able to update your dependencies and change the wording of the installation quick and easy.
 
 ![pic](https://i.imgur.com/n4rYntY.png)
 
