@@ -125,6 +125,8 @@ Run in terminal
 
 ## Tests
 
+![pic](https://i.imgur.com/3PPUpRJ.png)
+
 run tests with jest using
 
 `npm run test`
