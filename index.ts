@@ -1,28 +1,25 @@
 
 import * as Generator from './classes/Generator';
 
-export async function createScript(language: string, filename: string) {
+export async function createScript(language: string = "", filename: string = "") {
   if (!language && !filename) {
-    if (process.argv.length < 3 ) {
+    if (!process.argv[2]) {
       console.log('Arguments required to create script');
-  
-      console.log('npm run start -- LANGUAGE FILE');
-      console.log('If you have a file to be read ex. npm run start -- pip requirements.txt');
-  
       console.log('npm run start -- LANGUAGE');
       console.log('If you have a hardcoded values to be used ex. npm run start -- pip');
+      console.log('npm run start -- DEPENDENCY_FILE');
+      console.log('If you have a file to be read ex. npm run start -- pip requirements.txt');
       return;
     }
-
     // Variables below are redeclared for testing purposes
   
     // First CLI argument
     // language of install to be used
-    // language = language ? language : process.argv[2];
+    language = process.argv[2];
   
     // Second Optional CLI argument
     // If file is given, use filename if not empty string
-    // filename = filename ? filename : process.argv.length > 3 ? process.argv[3] : '';
+    filename = process.argv.length > 3 ? process.argv[3] : '';
   }
 
   try {
@@ -36,7 +33,10 @@ export async function createScript(language: string, filename: string) {
 }
 
 function main() {
-  
+  if (process.argv[2] !== '--config') {
+    createScript();
+  }
+  return;
 }
 
-// createScript(process.argv[2], process.argv[3]);
+main();
