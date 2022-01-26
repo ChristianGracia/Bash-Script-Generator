@@ -77,11 +77,11 @@ requests: "2.25.1",
 
 run in root of project
 
-Creating pip install script from requirements.txt
+Creating pip install script from examples/requirements.txt
 
 `npm run pip`
 
-Creating npm install script from package.json
+Creating npm install script from examples/package.json
 
 `npm run npm`
 
