@@ -107,7 +107,7 @@ export class Generator {
             const parsedData = data.split('\n').map((item) => item.replace(/[\r]/g, ''));
             parsedData.forEach((item) => {
               const splitItem = item.split('==');
-              this.versionedDependencies[splitItem[0]] = splitItem[1];
+              this.versionedDependencies[0][splitItem[0]] = splitItem[1];
             });
           break;
           case 'npm': ;

@@ -115,10 +115,6 @@ Run in terminal if hardcoded nonVersionedDependency array
 
 `node node_modules/bash-script-dependency-generator/ apt`
 
----
-
-**IN PROGRESS**
-
 **JavaScript/TypeScript - NPM**
 
 Run in terminal
