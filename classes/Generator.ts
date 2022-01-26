@@ -60,19 +60,25 @@ export class Generator {
       '',
     );
   };
-  private createScriptFromFile = () => {
+  private createScriptFromFile = async () => {
     console.log(
       `-------------------------------------------------- Reading File - ${this.file} ------------------------------------------------------`,
     );
-    return fs.readFile(this.file, 'utf8', (err, data) => {
-      const parsedData = data.split('\n').map((item) => item.replace(/[\r]/g, ''));
-      parsedData.forEach((item) => {
-        const splitItem = item.split('==');
-        versionedDependencies[splitItem[0]] = splitItem[1];
-      });
-      this.script = this.createVersionedScript();
-      console.log('rededed')
-      return this.writeScriptToFile(this.script);
+    return await fs.readFile(this.file, 'utf8', async (err, data) => {
+      console.log('data found')
+      console.log(data)
+      if (data) {
+        const parsedData = data.split('\n').map((item) => item.replace(/[\r]/g, ''));
+        parsedData.forEach((item) => {
+          const splitItem = item.split('==');
+          versionedDependencies[splitItem[0]] = splitItem[1];
+        });
+        return await this.writeScriptToFile(this.createVersionedScript());
+      } else {
+        console.log(
+          `-------------------------------------------------- Error Reading File - ${this.file} ------------------------------------------------------`,
+        );
+      }
     });
   };
 
@@ -82,7 +88,7 @@ export class Generator {
       return;
     }
     if (this.file) {
-      return this.createScriptFromFile();
+      return await this.createScriptFromFile();
     } else {
       return this.attemptScriptFromHardcodedValues();
     }
@@ -116,15 +122,15 @@ export class Generator {
     return this.writeScriptToFile(this.script);
   };
 
-  private writeScriptToFile = (script: string) => {
+  private writeScriptToFile = async (script: string) => {
     console.log(this.script);
-    fs.writeFile('install-depedencies.sh', script, (err: any) => {
+    return await fs.writeFile('install-depedencies.sh', script, (err: any) => {
       if (err) throw err;
       console.log(
-        '-------------------------------------------------- Script Created -----------------------------------------------------------------------------',
+        '-------------------------------------------------- Script Created - Find your script in the generated file install-depedencies.sh -----------------------------------------------------------------------------',
       );
-      console.log('Find your script in the generated file install-depedencies.sh');
+      return true;
     });
-    return true;
+
   };
 }

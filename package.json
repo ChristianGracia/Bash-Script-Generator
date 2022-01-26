@@ -16,7 +16,8 @@
     "postversion": "git push && git push --tags",
     "patch": "npm version patch",
     "release": "npm publish",
-    "clean": "rm *.test.js *.js */*.js"
+    "clean": "rm *.test.js *.js */*.js",
+    "dev": "npm run build && npm run start pip examples/requirements.txt"
   },
   "keywords": [
     "javascript",

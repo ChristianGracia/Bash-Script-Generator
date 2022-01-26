@@ -1,7 +1,7 @@
 
 import * as Generator from './classes/Generator';
 
-export function createScript(language: string, filename: string) {
+export async function createScript(language: string, filename: string) {
   if (!language && !filename) {
     if (process.argv.length < 3 ) {
       console.log('Arguments required to create script');
@@ -18,11 +18,11 @@ export function createScript(language: string, filename: string) {
   
     // First CLI argument
     // language of install to be used
-    language = language ? language : process.argv[2];
+    // language = language ? language : process.argv[2];
   
     // Second Optional CLI argument
     // If file is given, use filename if not empty string
-    filename = filename ? filename : process.argv.length > 3 ? process.argv[3] : '';
+    // filename = filename ? filename : process.argv.length > 3 ? process.argv[3] : '';
   }
 
   try {
@@ -33,6 +33,10 @@ export function createScript(language: string, filename: string) {
     console.log('error creating script');
   }
   return false;
+}
+
+function main() {
+  
 }
 
 // createScript(process.argv[2], process.argv[3]);
