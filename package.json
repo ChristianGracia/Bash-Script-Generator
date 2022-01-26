@@ -17,7 +17,8 @@
     "patch": "npm version patch",
     "release": "npm publish",
     "clean": "rm *.test.js *.js */*.js",
-    "dev": "npm run build && npm run start pip examples/requirements.txt"
+    "pip": "npm run build && npm run start pip examples/requirements.txt",
+    "npm": "npm run build && npm run start npm examples/package.json"
   },
   "keywords": [
     "javascript",

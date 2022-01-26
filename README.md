@@ -75,9 +75,15 @@ requests: "2.25.1",
 
 ## Demo
 
-run in root of project to see how it works
+run in root of project
 
-`npm run dev`
+Creating pip install script from requirements.txt
+
+`npm run pip`
+
+Creating npm install script from package.json
+
+`npm run npm`
 
 ---
 

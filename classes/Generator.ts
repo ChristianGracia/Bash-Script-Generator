@@ -2,7 +2,7 @@ import fs from 'fs';
 
 // This is for arrays of package names when version isn't important
 // Leave this as empty array unless you want to hardcode each package
-const nonVersionedDependencies = [];
+// Generator Property nonVersionedDependencies = [];
 
 // ex. install python3-dev and python3-pip without specific version
 // const nonVersionedDependencies = [
@@ -14,7 +14,9 @@ const nonVersionedDependencies = [];
 
 // This is for an object with keys equal to package names and values of the package version for when specific version is important
 // Leave this as empty object unless you want to hardcode in the package + version
-const versionedDependencies = {};
+// Second index object is only for package.json dev dependencies at this momemnt
+
+// Generator Property versionedDependencies = [{}];
 
 // ex. install pip at 20.3.4 and requests as 2.25.1
 // const versionedDependencies = {
@@ -28,6 +30,7 @@ const versionedDependencies = {};
 const fileLanguages = {
   apt: 'sudo apt-get install',
   pip: 'pip install',
+  npm: 'npm install'
 };
 
 export class Generator {
@@ -46,22 +49,27 @@ export class Generator {
   //     "python3-pip",
   // ];
 
-  public versionedDependencies : any = {};
+  public versionedDependencies : any = [{}];
 
   constructor(language: string, file: string) {
     (this.language = language), (this.file = file);
   }
 
   public createVersionedScript = () => {
-    const keys = Object.keys(this.versionedDependencies);
+    const keys = Object.keys(this.versionedDependencies.length && typeof this.versionedDependencies[0] === 'object' ? this.versionedDependencies[0] : {});
     const length = keys.length
-    return keys.reduce(
-      (scriptString, dependency, currentIndex) =>
-        (scriptString += `${fileLanguages[this.language]} ${dependency}==${this.versionedDependencies[dependency]}${
-          currentIndex < length - 1 ? ' && ' : ''
-        }`),
-      '',
-    );
+
+    if (this.language === 'npm') {
+      return `npm i --save ${this.nonVersionedDependencies[0].concat(' ')} && npm i --dev ${this.nonVersionedDependencies[0].concat(' ')}`
+    } else {
+      return keys.reduce(
+        (scriptString, dependency, currentIndex) =>
+          (scriptString += `${fileLanguages[this.language]} ${dependency}==${this.versionedDependencies[0][dependency]}${
+            currentIndex < length - 1 ? ' && ' : ''
+          }`),
+        '',
+      );
+    }
   };
   public createNonVersionedScript = (): string => {
     const length = this.nonVersionedDependencies.length;
@@ -80,11 +88,31 @@ export class Generator {
     return await fs.readFile(this.file, 'utf8', async (err, data) => {
       console.log(data)
       if (data) {
-        const parsedData = data.split('\n').map((item) => item.replace(/[\r]/g, ''));
-        parsedData.forEach((item) => {
-          const splitItem = item.split('==');
-          this.versionedDependencies[splitItem[0]] = splitItem[1];
-        });
+        switch(this.language) {
+          case 'pip': 
+            const parsedData = data.split('\n').map((item) => item.replace(/[\r]/g, ''));
+            parsedData.forEach((item) => {
+              const splitItem = item.split('==');
+              this.versionedDependencies[splitItem[0]] = splitItem[1];
+            });
+          break;
+          case 'npm': ;
+            const { devDependencies, dependencies } = JSON.parse(data);
+            console.log(devDependencies);
+            Object.keys(dependencies).forEach((dependency) => {
+              console.log(dependency)
+              this.versionedDependencies[0][dependency.replace(/'/g, "")] = data['dependencies'][dependency];
+            });
+            const devDependencyObj = {};
+            Object.keys(devDependencies).forEach((dependency) => {
+              devDependencyObj[dependency] = data['devDependencies'][dependency.replace(/'/g, "")];
+            });
+            this.versionedDependencies.push(devDependencyObj);
+            console.log(this.versionedDependencies);
+            break;
+          default:
+            break;
+        }
         return await this.writeScriptToFile(this.createVersionedScript());
       } else {
         console.log(
