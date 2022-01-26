@@ -14,7 +14,6 @@ export class Generator {
 
   // This is for arrays of package names when version isn't important
   // Leave this as empty array unless you want to hardcode each package
-
   public nonVersionedDependencies : string[] = [];
   // Generator Property nonVersionedDependencies = [];
 
@@ -29,7 +28,6 @@ export class Generator {
   // Leave this as empty object unless you want to hardcode in the package + version
   // Second index object is only for package.json dev dependencies at this momemnt
   public versionedDependencies : any = [{}];
-
   // Generator Property versionedDependencies = [{}];
 
   // PIP

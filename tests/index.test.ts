@@ -15,3 +15,11 @@ test('Create requirements.txt from file fails correctly', async () => {
     //     console.log('install-depedencies.sh was deleted');
     // });
 })
+
+test('No dependency installation language creates error', async () => {
+    expect(await createScript("", "d")).not.toBeTruthy;
+})
+
+test('Unsupported installation language creates error', async () => {
+    expect(await createScript("c#", "depedency.xml")).not.toBeTruthy;
+})
