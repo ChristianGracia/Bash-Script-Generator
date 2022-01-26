@@ -1,31 +1,5 @@
 import fs from 'fs';
 
-// This is for arrays of package names when version isn't important
-// Leave this as empty array unless you want to hardcode each package
-// Generator Property nonVersionedDependencies = [];
-
-// ex. install python3-dev and python3-pip without specific version
-// const nonVersionedDependencies = [
-//     "python3-dev",
-//     "python3-pip",
-// ];
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------
-
-// This is for an object with keys equal to package names and values of the package version for when specific version is important
-// Leave this as empty object unless you want to hardcode in the package + version
-// Second index object is only for package.json dev dependencies at this momemnt
-
-// Generator Property versionedDependencies = [{}];
-
-// ex. install pip at 20.3.4 and requests as 2.25.1
-// const versionedDependencies = {
-//     pip: "20.3.4",
-//     requests: "2.25.1",
-// };
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------
-
 // Edit script installation text here
 const fileLanguages = {
   apt: 'sudo apt-get install',
@@ -39,9 +13,10 @@ export class Generator {
   private language: string = '';
 
   // This is for arrays of package names when version isn't important
-  // Leave this as empty array unless you want to hardcode each package 
+  // Leave this as empty array unless you want to hardcode each package
 
   public nonVersionedDependencies : string[] = [];
+  // Generator Property nonVersionedDependencies = [];
 
   // ex. install python3-dev and python3-pip without specific version
   // const nonVersionedDependencies = [
@@ -49,7 +24,32 @@ export class Generator {
   //     "python3-pip",
   // ];
 
+
+  // This is for an object with keys equal to package names and values of the package version for when specific version is important
+  // Leave this as empty object unless you want to hardcode in the package + version
+  // Second index object is only for package.json dev dependencies at this momemnt
   public versionedDependencies : any = [{}];
+
+  // Generator Property versionedDependencies = [{}];
+
+  // PIP
+  // ex. install selenium at 20.3.4 and requests as 2.25.1
+  // const versionedDependencies = {
+  //     selenium: "20.3.4",
+  //     requests: "2.25.1",
+  // };
+
+
+  // NPM
+  // ex. install node at 1.3.4 and ts-node as dev dependency at 2.3.4
+  // const versionedDependencies = [
+  // {
+  //   node: "1.3.4",
+  // },
+  // { 
+  //   ts-node: "2.3.4"
+  // }];
+
 
   constructor(language: string, file: string) {
     (this.language = language), (this.file = file);
