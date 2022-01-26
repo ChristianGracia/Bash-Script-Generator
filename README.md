@@ -1,6 +1,6 @@
 # Bash Installation Script Generator
 
-This repository is for an NPM package I made that creates a script of chained installation commands for JavaScript/TypeScript, Linux, and Python environments based commands given.
+This repository is for an NPM package I made that reads dependency installation files like requirements.text or package.json and generates long bash script commands for quick installation in Linux, Python, and JavaScript environments
 
 This tool allows you to rebuild your bash installation scripts very fast and makes it easier to maintain.
 
