@@ -60,7 +60,21 @@ export class Generator {
     const length = keys.length
 
     if (this.language === 'npm') {
-      return `npm i --save ${this.nonVersionedDependencies[0].concat(' ')} && npm i --dev ${this.nonVersionedDependencies[0].concat(' ')}`
+      const devKeys = Object.keys(this.versionedDependencies.length === 2 && typeof this.versionedDependencies[1] === 'object' ? this.versionedDependencies[1] : {});
+      let scriptString = "";
+      keys.forEach((key: string, currentIndex: number) => {
+        if (currentIndex === 0) {
+          scriptString += 'npm i --save '
+        }
+        scriptString += `${key}@${this.versionedDependencies[0][key]}${currentIndex === keys.length - 1 ? '' : ' '}`
+      });
+      devKeys.forEach((key: string, currentIndex: number) => {
+        if (currentIndex === 0) {
+          scriptString += `${scriptString === '' ? '' : ' && '}npm i --dev `
+        }
+        scriptString += `${key}@${this.versionedDependencies[1][key]}${currentIndex === devKeys.length - 1 ? '' : ' '}`
+      });
+      return scriptString;
     } else {
       return keys.reduce(
         (scriptString, dependency, currentIndex) =>
@@ -98,17 +112,15 @@ export class Generator {
           break;
           case 'npm': ;
             const { devDependencies, dependencies } = JSON.parse(data);
-            console.log(devDependencies);
             Object.keys(dependencies).forEach((dependency) => {
-              console.log(dependency)
-              this.versionedDependencies[0][dependency.replace(/'/g, "")] = data['dependencies'][dependency];
+              this.versionedDependencies[0][dependency] = dependencies[dependency];
             });
+
             const devDependencyObj = {};
             Object.keys(devDependencies).forEach((dependency) => {
-              devDependencyObj[dependency] = data['devDependencies'][dependency.replace(/'/g, "")];
+              devDependencyObj[dependency] = devDependencies[dependency];
             });
             this.versionedDependencies.push(devDependencyObj);
-            console.log(this.versionedDependencies);
             break;
           default:
             break;
