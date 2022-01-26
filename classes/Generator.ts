@@ -112,9 +112,11 @@ export class Generator {
           break;
           case 'npm': ;
             const { devDependencies, dependencies } = JSON.parse(data);
-            Object.keys(dependencies).forEach((dependency) => {
-              this.versionedDependencies[0][dependency] = dependencies[dependency];
-            });
+            if (dependencies) {
+              Object.keys(dependencies).forEach((dependency) => {
+                this.versionedDependencies[0][dependency] = dependencies[dependency];
+              });
+            }
 
             const devDependencyObj = {};
 
