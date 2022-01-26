@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node index.js",
-    "test": "jest --config jestconfig.json --detectOpenHandles --silent",
+    "test": "jest --config jestconfig.json --detectOpenHandles --silent --runInBand",
     "format": "prettier --write \"*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "preversion": "npm run lint",

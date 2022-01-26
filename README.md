@@ -73,6 +73,14 @@ requests: "2.25.1",
 
 ---
 
+## Demo
+
+run in root of project to see how it works
+
+`npm run dev`
+
+---
+
 ## Installation
 
 `npm i --dev bash-script-dependency-generator@latest`
@@ -110,3 +118,9 @@ Run in terminal if hardcoded nonVersionedDependency array
 Run in terminal
 
 `node node_modules/bash-script-dependency-generator/ npm package.json`
+
+## Tests
+
+run tests with jest using
+
+`npm run test`

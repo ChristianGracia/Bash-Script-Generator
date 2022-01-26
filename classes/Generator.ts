@@ -35,24 +35,37 @@ export class Generator {
   private script: string = '';
   private language: string = '';
 
+  // This is for arrays of package names when version isn't important
+  // Leave this as empty array unless you want to hardcode each package 
+
+  public nonVersionedDependencies : string[] = [];
+
+  // ex. install python3-dev and python3-pip without specific version
+  // const nonVersionedDependencies = [
+  //     "python3-dev",
+  //     "python3-pip",
+  // ];
+
+  public versionedDependencies : any = {};
+
   constructor(language: string, file: string) {
     (this.language = language), (this.file = file);
   }
 
-  private createVersionedScript = () => {
-    const keys = Object.keys(versionedDependencies);
+  public createVersionedScript = () => {
+    const keys = Object.keys(this.versionedDependencies);
     const length = keys.length
     return keys.reduce(
       (scriptString, dependency, currentIndex) =>
-        (scriptString += `${fileLanguages[this.language]} ${dependency}==${versionedDependencies[dependency]}${
+        (scriptString += `${fileLanguages[this.language]} ${dependency}==${this.versionedDependencies[dependency]}${
           currentIndex < length - 1 ? ' && ' : ''
         }`),
       '',
     );
   };
-  private createNonVersionedScript = (): string => {
-    const length = nonVersionedDependencies.length;
-    return nonVersionedDependencies.reduce(
+  public createNonVersionedScript = (): string => {
+    const length = this.nonVersionedDependencies.length;
+    return this.nonVersionedDependencies.reduce(
       (scriptString, dependency, currentIndex) =>
         (scriptString += `${fileLanguages[this.language]} ${dependency}${
           currentIndex < length - 1 ? ' && ' : ''
@@ -65,13 +78,12 @@ export class Generator {
       `-------------------------------------------------- Reading File - ${this.file} ------------------------------------------------------`,
     );
     return await fs.readFile(this.file, 'utf8', async (err, data) => {
-      console.log('data found')
       console.log(data)
       if (data) {
         const parsedData = data.split('\n').map((item) => item.replace(/[\r]/g, ''));
         parsedData.forEach((item) => {
           const splitItem = item.split('==');
-          versionedDependencies[splitItem[0]] = splitItem[1];
+          this.versionedDependencies[splitItem[0]] = splitItem[1];
         });
         return await this.writeScriptToFile(this.createVersionedScript());
       } else {
@@ -93,11 +105,11 @@ export class Generator {
       return this.attemptScriptFromHardcodedValues();
     }
   };
-  private attemptScriptFromHardcodedValues = () => {
+  public attemptScriptFromHardcodedValues = () => {
     console.log('No File given as argument, checking hardcoded values');
 
-    const hardCodedVersionedDependencies = Object.keys(versionedDependencies).length;
-    const hardCodedNonVersionedDependencies = nonVersionedDependencies.length;
+    const hardCodedVersionedDependencies = Object.keys(this.versionedDependencies).length;
+    const hardCodedNonVersionedDependencies = this.nonVersionedDependencies.length;
 
     // Cannot currently process both at once
     if (hardCodedVersionedDependencies && hardCodedNonVersionedDependencies) {

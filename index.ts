@@ -1,7 +1,8 @@
 
-import * as Generator from './classes/Generator';
+import { Generator } from './classes/Generator';
 
 export async function createScript(language: string = "", filename: string = "") {
+  console.log(process.argv)
   if (!language && !filename) {
     if (!process.argv[2]) {
       console.log('Arguments required to create script');
@@ -19,12 +20,12 @@ export async function createScript(language: string = "", filename: string = "")
   
     // Second Optional CLI argument
     // If file is given, use filename if not empty string
-    filename = process.argv.length > 3 ? process.argv[3] : '';
+    filename = process.argv[3] ?? ""
   }
 
   try {
     console.log(`Script Installation language: ${language} - ${filename}`)
-    const generator = new Generator.Generator(language, filename);
+    const generator = new Generator(language, filename);
     return await generator.createScript();
   } catch {
     console.log('error creating script');
