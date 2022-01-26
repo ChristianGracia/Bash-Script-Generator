@@ -117,9 +117,12 @@ export class Generator {
             });
 
             const devDependencyObj = {};
-            Object.keys(devDependencies).forEach((dependency) => {
-              devDependencyObj[dependency] = devDependencies[dependency];
-            });
+
+            if (devDependencies) {
+              Object.keys(devDependencies).forEach((dependency) => {
+                devDependencyObj[dependency] = devDependencies[dependency];
+              });
+            }
             this.versionedDependencies.push(devDependencyObj);
             break;
           default:
