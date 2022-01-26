@@ -77,7 +77,11 @@ requests: "2.25.1",
 
 ## Demo
 
-run in root of project
+clone this repo with
+
+`git clone https://github.com/ChristianGracia/Bash-Script-Generator.git`
+
+run in root of project after repository is cloned
 
 Creating pip install script from examples/requirements.txt
 
@@ -103,7 +107,7 @@ File argument is optional, if omitted, a script will be attempted to be built fr
 
 **Python dependencies - Pip**
 
-Run in terminal if hardcoded versionedDependencyObject
+Run in terminal if hardcoded versionedDependencyObject property on Generator class
 
 `node node_modules/bash-script-dependency-generator/ pip`
 
@@ -113,7 +117,7 @@ Run in terminal if you have the dependency file
 
 **Debian Linux - APT**
 
-Run in terminal if hardcoded nonVersionedDependency array
+Run in terminal if hardcoded nonVersionedDependency array property on Generator class
 
 `node node_modules/bash-script-dependency-generator/ apt`
 
